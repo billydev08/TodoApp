@@ -6,6 +6,8 @@ import TodoList from './TodoList';
 const Input = () => {
   const [todosList, setTodosList] = useState([]);
   const [todo, setTodo] = useState('');
+  const [editedtodo, setEditedTodo] = useState(null);
+  const [editTodoText, setEditTodoText] = useState('');
 
   ////////--------------- SUBMIT HANDLER ---------------////////////
 
@@ -49,6 +51,21 @@ const Input = () => {
     setTodosList(checkedTodo);
   };
 
+  ////////--------------- EDIT TODO HANDLER ---------------////////////
+
+  const editHandler = (id) => {
+    const updatedEditedTodo = [...todosList].map((todo) => {
+      if (todo.id === id) {
+        todo.todo = editTodoText;
+      }
+      return todo;
+    });
+
+    setEditedTodo(null);
+    setEditTodoText('');
+    setTodosList(updatedEditedTodo);
+  };
+
   return (
     <div>
       <form onSubmit={submitHandler}>
@@ -66,6 +83,11 @@ const Input = () => {
           todo={todo}
           delTodo={deleleHandler}
           checkTodo={checkHandler}
+          editHandler={editHandler}
+          editTodoText={editTodoText}
+          setEditTodoText={setEditTodoText}
+          editedtodo={editedtodo}
+          setEditedTodo={setEditedTodo}
         />
       ))}
     </div>
